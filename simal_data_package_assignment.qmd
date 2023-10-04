@@ -5,6 +5,8 @@ format: html
 editor: visual
 ---
 
+# Load Packages
+
 ```{r}
 library(tidyverse)
 library(ggthemes)
@@ -14,7 +16,37 @@ theme_set(theme_minimal(base_size = 12))
 
 ```
 
+# Load Data
+
 ```{r}
 movies <- read_csv("Data/movies.csv")
 
 ```
+
+# Section 1: Data Sources
+
+**Background**
+
+The Bechdel test is a test used to test gender biases and representation of women in movies, TV shows, etc. Often women in film portray characters that lack depth or are depicted as certain architypes of damsels in distress. The test was first introduced by cartoonist Alison Bechdel who said that in order to pass the test a work of fiction must:
+
+-   Involve two named women characters
+
+-   The two women must converse with one another
+
+-   The conversation does not involve a man or any mention of a male character.
+
+Many movies fail to pass this test and it highlights the need for more female representation in strong roles beyond male-centric themes.
+
+**The Data**
+
+The data is from a public data source call [TidyTuesday](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-09/readme.md) and it was created by [FiveThirtyEight](https://github.com/fivethirtyeight/data/tree/master/bechdel), a polling aggregation website using [Bechdel](https://bechdeltest.com/) test data which analyzed over 5,000 films and whether or not they passed the test and [TheNumbers.com](https://www.the-numbers.com/) which compiled a dataset of various stats on the different movies including awards, directors, ratings, revenue, etc. The data was collected to expose gender biases within film and compare whether or not those films that pass or do not pass the Bechdel test differ in budgets, ratings, revenue, etc. The set analyzes 1,794 films between the years of 1970-2013. The films in the dataset are an aggregate of the intersection between the films in the Numbers data set and the Bechdel dataset.
+
+# Format of Data
+
+difference between tabular and non tabular data
+
+# Data Structure
+
+# Data Issues 
+
+# Data Repository
