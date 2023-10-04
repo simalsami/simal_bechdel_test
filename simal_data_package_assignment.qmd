@@ -1,0 +1,20 @@
+---
+title: "Simal Data Package Assignment"
+author: "Simal Sami"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(ggthemes)
+library(readr)
+
+theme_set(theme_minimal(base_size = 12))
+
+```
+
+```{r}
+movies <- read_csv("Data/movies.csv")
+
+```
