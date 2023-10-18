@@ -8,9 +8,6 @@ editor: visual
 # Load Packages
 
 ```{r}
-#| message: false
-#| echo: false
-#| include: false
 library(tidyverse)
 library(ggthemes)
 library(readr)
@@ -24,15 +21,9 @@ theme_set(theme_minimal(base_size = 12))
 # Load Data
 
 ```{r}
-#| message: false
-movies <- read_csv("Data/movies.csv")
-raw_bechdel <- read_csv("Data/raw_bechdel.csv")
+movies <- read_csv("../Data/movies.csv")
+raw_bechdel <- read_csv("../Data/raw_bechdel.csv")
 
-```
-
-```{r}
-#| message: false
-source("R/get_movies_data.R")
 ```
 
 # Section 1: Data Sources
@@ -51,17 +42,17 @@ Many movies fail to pass this test and it highlights the need for more female re
 
 **The Data**
 
-The data is from a public data source call [TidyTuesday](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-09/readme.md) and it was created by [FiveThirtyEight](https://github.com/fivethirtyeight/data/tree/master/bechdel), a polling aggregation website using [Bechdel](https://bechdeltest.com/) test data which analyzed over 5,000 films and whether or not they passed the test, alongside [TheNumbers.com](https://www.the-numbers.com/) which compiled a data set of various stats on the different movies including awards, directors, ratings, revenue, etc. The data was collected to expose gender biases within film and compare whether or not those films that pass or do not pass the Bechdel test differ in budgets, ratings, revenue, etc. The set analyzes 1,794 films between the years of 1970-2013. The films in the data set are an aggregate of the intersection between the films in the Numbers data set and the Bechdel data set.
+The data is from a public data source call [TidyTuesday](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-09/readme.md) and it was created by [FiveThirtyEight](https://github.com/fivethirtyeight/data/tree/master/bechdel), a polling aggregation website using [Bechdel](https://bechdeltest.com/) test data which analyzed over 5,000 films and whether or not they passed the test alongside [TheNumbers.com](https://www.the-numbers.com/) which compiled a dataset of various stats on the different movies including awards, directors, ratings, revenue, etc. The data was collected to expose gender biases within film and compare whether or not those films that pass or do not pass the Bechdel test differ in budgets, ratings, revenue, etc. The set analyzes 1,794 films between the years of 1970-2013. The films in the dataset are an aggregate of the intersection between the films in the Numbers data set and the Bechdel dataset.
 
 # Format of Data
 
-The data is tabular and stored as a csv file.
+difference between tabular and non tabular data
 
 # Data Structure
 
 ## Raw Bechdel Data:
 
-The Raw Bechdel data set contains 10,136 observations in tabular form. Each row of the Raw Bechdel data set is a movie which contains the following 5 columns:
+The Raw Bechdel data set contains 10,136 observations. Each row of the Raw Bechdel data set is a movie which contains the following 5 columns:
 
 -   A Movie ID
 
@@ -109,22 +100,4 @@ movies %>%
 
 # Data Issues
 
-The data does not contain any errors or missing values.
-
-# Data Cleaning
-
-The data has been cleaned using a script provided by TidyTuesday it can be found it the repository under the R folder. The script does the following:
-
--   Fetches the Bechdel data
-
--   Converts the JSON data into a tidy data frame and filters the movies by years.
-
--   Writes this data to a CSV file called raw_bechdel
-
--   Fetches the movie data.
-
--   Converts the JSON data into a tidy data frame and also converts columns into their proper data type.
-
--   Writes the data frame to a CSV called combo_movies
-
--   Joins together the combo_movies data set and raw-bechdel data set based on the movies they have in common and creates a new data frame written to movies.csv
+# Data Repository
