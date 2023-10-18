@@ -100,4 +100,22 @@ movies %>%
 
 # Data Issues
 
-# Data Repository
+The data does not contain any errors or missing values.
+
+## #Data Cleaning
+
+The data has been cleaned using a script provided by TidyTuesday it can be found it the repository under the R folder. The script does the following:
+
+\- Fetches the Bechdel data
+
+\- Converts the JSON data into a tidy data frame and filters the movies by years.
+
+\- Writes this data to a CSV file called raw_bechdel
+
+\- Fetches the movie data.
+
+\- Converts the JSON data into a tidy data frame and also converts columns into their proper data type.
+
+\- Writes the data frame to a CSV called combo_movies
+
+\- Joins together the combo_movies data set and raw-bechdel data set based on the movies they have in common and creates a new data frame written to movies.csv
