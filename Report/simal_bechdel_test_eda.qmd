@@ -13,16 +13,35 @@ editor: visual
 #! message:false
 library(tidyverse)
 library(ggthemes)
+library(GGally) 
+library(skimr) 
+library(patchwork) 
+library(RColorBrewer) 
 
 theme_set(theme_minimal(base_size = 12))
 ```
 
-```{}
+```         
 ```
 
 ## Load the data
 
 ```{r}
 movies <- read_csv("../Data/movies.csv")
-raw_bechdel <- read_csv("../Data/raw_bechdel.csv")
+
+```
+
+## Glimpse
+
+```{r}
+glimpse(movies)
+```
+
+```{r}
+skim(movies)
+```
+
+```{r}
+bechdel_pass-fail <- movies %>%
+  mutate()
 ```
