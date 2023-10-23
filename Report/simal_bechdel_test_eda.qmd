@@ -16,8 +16,9 @@ library(ggthemes)
 library(GGally) 
 library(skimr) 
 library(patchwork) 
-library(RColorBrewer) 
-
+library(RColorBrewer)
+library(ggplot2)
+library(ggpattern)
 theme_set(theme_minimal(base_size = 12))
 ```
 
@@ -42,6 +43,79 @@ skim(movies)
 ```
 
 ```{r}
-bechdel_pass-fail <- movies %>%
-  mutate()
+
+
+ggplot(data = movies, aes(x = binary)) +
+  geom_bar(fill = "blue", width = 0.7) +
+  geom_text(stat = "count", aes(label = after_stat(count), vjust = 3), size = 4) +
+  labs(title = "Count of Movies that Pass or Fail the Bechdel Test",
+      
+       y = "Count") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+
+```
+
+```{r}
+
+ra_1 <- movies  %>%
+  ggplot(aes(x=binary, fill=binary)) + 
+  geom_bar(color="#512d6d") + 
+   scale_fill_manual(values = c("red","blue")) + 
+  theme(legend.position = "none") +
+  xlab("Passing or Failing Bechdel Test") + 
+  ylab("Count")
+
+ra_2 <- movies %>%
+  ggplot(aes(x=imdb_rating)) + 
+  geom_histogram(color="#512d6d",fill="lightblue") + 
+  xlab("Ratings") + 
+  ylab("Count")
+
+(ra_1 + ra_2)
+```
+
+```{r}
+ggplot(movies, aes(x=year, fill=binary)) +
+  geom_bar(position = "stack")
+```
+
+```{r}
+ggplot(movies, aes(x = year, fill = binary)) +
+  geom_bar(position = "dodge")
+
+```
+
+```{r}
+ggplot(movies, aes(x = binary, y = budget)) +
+  geom_boxplot()
+```
+
+```{r}
+
+
+ggplot(movies, aes(x = binary, y = imdb_rating)) +
+  geom_boxplot()
+
+```
+
+```{r}
+
+
+
+
+movies$GenreCategory <- ifelse(movies$genre %in% c("Action", "Adventure", "Sci-Fi"), "Action/Adventure/Sci-Fi",
+                            ifelse(movies$genre %in% c("Comedy", "Romance"), "Comedy/Romance",
+                         ifelse(movies$genre %in% c("Horror", "Thriller"), "Horror/Thriller",
+
+ifelse(movies$genre %in% c("Drama", "Mystery", "Crime"), "Drama/Mystery/Crime", "Other"))))
+
+
+
+```
+
+```{r}
+
+ggplot(movies, aes(x = GenreCategory, y = binary, fill = Count)) +
+  geom_tile()
 ```
