@@ -1,16 +1,23 @@
 ---
-title: "Bechdel Test Exploratory Analysis"
+title: "Bechdel Test Exploratory Data Analysis"
 author: "Simal Sami"
-format: html
 editor: visual
+format: 
+  html:
+    code-fold: true
+    echo: true
+    toc: true
+    toc-location: left
+    self-contained: true
 ---
 
 ## Bechdel Test Data EDA
 
-```{r}
+```{r message=FALSE}
 #! include: false 
 #! warning: false
 #! message:false
+#! echo: false
 library(tidyverse)
 library(ggthemes)
 library(GGally) 
@@ -19,103 +26,263 @@ library(patchwork)
 library(RColorBrewer)
 library(ggplot2)
 library(ggpattern)
-theme_set(theme_minimal(base_size = 12))
-```
+library(knitr)
 
-```         
+theme_set(theme_minimal(base_size = 12))
 ```
 
 ## Load the data
 
-```{r}
+```{r message=FALSE}
+#!message: false
 movies <- read_csv("../Data/movies.csv")
 
 ```
 
-## Glimpse
+## 
 
-```{r}
-glimpse(movies)
+```{r message=FALSE}
+#| label: fig-1
+#| message: false
+#| fig-cap: Figure 1 is table previewing a few rows of the movies dataset
+movies_noplot <-
+movies %>%
+  select(-plot) %>%
+  head(5) %>%
+  kable()
+
+movies_noplot
 ```
 
-```{r}
-skim(movies)
-```
+```{r message=FALSE}
+#| label: fig-2
+#| message: false
+#| fig-cap: Exploratory plots for the number of movies that passed and fail the Bechdel Test and the distribution of IMDB ratings 
 
-```{r}
-
-
-ggplot(data = movies, aes(x = binary)) +
-  geom_bar(fill = "blue", width = 0.7) +
-  geom_text(stat = "count", aes(label = after_stat(count), vjust = 3), size = 4) +
-  labs(title = "Count of Movies that Pass or Fail the Bechdel Test",
-      
-       y = "Count") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
-
-```
-
-```{r}
 
 ra_1 <- movies  %>%
   ggplot(aes(x=binary, fill=binary)) + 
   geom_bar(color="#512d6d") + 
-   scale_fill_manual(values = c("red","blue")) + 
+   scale_fill_manual(values = c("lightpink","lightblue")) + 
+  geom_text(stat = "count", aes(label = after_stat(count), vjust = 3), size = 4)
   theme(legend.position = "none") +
   xlab("Passing or Failing Bechdel Test") + 
-  ylab("Count")
+  ylab("Count") +
+     theme(legend.position = "none")
 
 ra_2 <- movies %>%
   ggplot(aes(x=imdb_rating)) + 
   geom_histogram(color="#512d6d",fill="lightblue") + 
   xlab("Ratings") + 
-  ylab("Count")
+  ylab("Count") +
+  theme(legend.position = "none")
 
 (ra_1 + ra_2)
 ```
 
-```{r}
+In the data-set, more movies fail than pass. Most movies have IMDB ratings between 6 and 8.
+
+```{r message=FALSE}
+#| label: fig-3
+#| message: false
+#| fig-cap: Exploratory stacked bar plot of the distribution of movies that passed and failed the Bechdel Test over the years.
 ggplot(movies, aes(x=year, fill=binary)) +
-  geom_bar(position = "stack")
+  geom_bar(position = "stack") +
+  scale_fill_manual(values = c("lightpink","lightblue")) +
+  labs(
+    fill="Bechdel Test Outcome"
+  )
 ```
 
-```{r}
-ggplot(movies, aes(x = year, fill = binary)) +
-  geom_bar(position = "dodge")
+The stacked bar plot indicates that over the years the proportions of failing and passing movies stayed roughly the same throughout the years. There were no notable differences in proportions.
 
-```
+```{r message=FALSE}
+#| label: fig-4
+#| message: false
+#| fig-cap: Box plot of the distribution of movie budgets of those that passed and failed with outliers, means, and quartiles.
 
-```{r}
+
 ggplot(movies, aes(x = binary, y = budget)) +
-  geom_boxplot()
+  labs(x = "Bechdel Test Outcome",
+       y = "Budget") +
+  geom_boxplot() +
+  theme_minimal()
 ```
 
-```{r}
+Most movies have budgets that are on average under \$1,000,000 however there are some outliers. This is true for both passing and failing and there is no significant result that indicates budget has any effect on passing or failing.
 
+```{r message=FALSE}
+#| label: fig-5
+#| message: false
+#| fig-cap: Box plot of the distribution of movie ratings of those that passed and failed with outliers, means, and quartiles
 
 ggplot(movies, aes(x = binary, y = imdb_rating)) +
-  geom_boxplot()
+  labs(x = "Bechdel Test Outcome",
+       y = "IMDB Rating") + 
+  geom_boxplot() +
+  theme_minimal()
+
+```
+
+Average ratings for both pass and fail fall between 6-8 and there is no clear evidence that rating has an impact on pass and fail rates.
+
+```{r}
+
+
+movies_sorted_genre <- movies %>%
+  separate_rows(genre, sep = ", ")
+
+
+```
+
+```{r message=FALSE}
+#| label: fig-6
+#| message: false
+#| fig-cap: Stacked bar plot of the distribution of movies that passed and failed by genre.
+
+
+movies_sorted_genre %>%
+  group_by(genre, binary) %>%
+  summarise(count = n()) %>%
+  ggplot(aes(x = genre, y = count, fill= binary)) +
+  geom_bar(stat = "identity") +
+ scale_fill_manual(values = c("PASS" = "lightblue", "FAIL" = "lightpink")) +
+  
+  xlab("Genre") +
+  ylab("Count") +
+   theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+  
+
+
+
+
+```
+
+```{r message=FALSE}
+#| message: false
+
+summary_data <- movies_sorted_genre %>%
+  group_by(genre, binary) %>%
+  summarise(count = n())
+
+
+genres_with_more_passing <- summary_data %>%
+  spread(binary, count, fill = 0) %>%  
+  filter(PASS > FAIL)  
+
+
+cat("Genres with more passing movies than failing movies:\n")
+cat(genres_with_more_passing$genre, sep = "\n")
+
+```
+
+The genres listed above are the genres that have more movies that pass than fail.
+
+```{r}
+movies_pass<- movies %>%
+  filter(binary == "PASS")
+```
+
+```{r}
+movies_fail <- movies %>%
+  filter(binary == "FAIL")
+```
+
+```{r}
+#| label: fig-7
+#| message: false
+#| fig-cap: Line plots of the count of movies passing and failing over the years.
+pass<- ggplot(movies_pass, aes(x = year)) +
+  geom_line(stat = "count", color = "lightblue") +
+  xlab("Year") +
+  ylab("Count of Movies Passing") +
+  theme_minimal()
+
+fail<- ggplot(movies_fail, aes(x = year)) +
+  geom_line(stat = "count", color = "lightpink") +
+  xlab("Year") +
+  ylab("Count of Movies Failing") +
+  theme_minimal()
+
+(pass + fail)
+```
+
+Both passing and failing have seen increases in the count of movies but this is mostly due to the overall increase production of movies. Around 2010, both passing and failing were at a peak but have since seen significant drops but of recent both seem to be slowly rising.
+
+```{r}
+#| label: fig-8
+#| message: false
+#| fig-cap: Grouped bar plot of the count of movies passing and failing grouped by guidance rating.
+ggplot(movies, aes(x = rated, fill = binary)) +
+  geom_bar(position = "dodge") +
+  xlab("Guidance Rating") +
+  ylab("Count") +
+  scale_fill_manual(values = c("PASS" = "lightblue", "FAIL" = "lightpink")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+Based on guidance ratings, all ratings seem to have more failing than passing movies besides those that are not rated.
+
+```{r}
+
+movies_sorted_country<- movies %>%
+  separate_rows(country, sep = ", ")
+```
+
+```{r}
+
+top_countries <- movies_sorted_country %>%
+  filter(!is.na(country)) %>%
+  group_by(country) %>%
+  summarise(movie_count = n()) %>%
+  arrange(desc(movie_count)) %>%
+  head(5)
+
+
+
 
 ```
 
 ```{r}
 
+#| label: fig-9
+#| message: false
+#| fig-cap: The top 5 producers of movies in the dataset and their proportion of failing/passing movies.
 
+countries_of_interest <- c("USA", "UK", "Germany", "France", "Canada")
 
+filtered_data <- movies_sorted_country %>%
+  filter(country %in% countries_of_interest)
 
-movies$GenreCategory <- ifelse(movies$genre %in% c("Action", "Adventure", "Sci-Fi"), "Action/Adventure/Sci-Fi",
-                            ifelse(movies$genre %in% c("Comedy", "Romance"), "Comedy/Romance",
-                         ifelse(movies$genre %in% c("Horror", "Thriller"), "Horror/Thriller",
-
-ifelse(movies$genre %in% c("Drama", "Mystery", "Crime"), "Drama/Mystery/Crime", "Other"))))
-
+ggplot(filtered_data, aes(x = country, fill = binary)) +
+  geom_bar(position = "fill") +
+  xlab("Country") +
+  ylab("Proportion") +
+  scale_fill_manual(values = c("PASS" = "lightblue", "FAIL" = "lightpink")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
 ```
+
+The top 5 country's that produce the most movies in the dataset, all roughly seem to have even proportions of passing and failing movies. Some lean slightly more towards one that the other but it does not seem significant.
 
 ```{r}
+#| label: fig-10
+#| message: false
+#| fig-cap: Grouped bar plot of pass and fail count by decade.
 
-ggplot(movies, aes(x = GenreCategory, y = binary, fill = Count)) +
-  geom_tile()
+labels <- c("1990s's", "2000's", "2010's")
+ggplot(movies, aes(x = factor(decade_code), fill = binary)) +
+  scale_x_discrete(labels = labels)+
+  geom_bar(position = "dodge") +
+  xlab("Decade") +
+  ylab("Count") +
+  scale_fill_manual(values = c("PASS" = "lightblue", "FAIL" = "lightpink")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+
+Based on decades, of all decades listed, more movies fail than pass.

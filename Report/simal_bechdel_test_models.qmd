@@ -1,0 +1,92 @@
+---
+title: "Bechdel Test Models"
+author: "Simal Sami"
+format: html
+editor: visual
+---
+
+## Models
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+
+
+```
+
+```{r}
+ggplot(movies_sorted_genre, aes(genre, fill = binary )) +
+    geom_bar() +
+    coord_flip()
+```
+
+```{r}
+movies$binary <- as.factor(movies$binary)
+```
+
+```{r}
+
+model_formula <- formula(binary ~ genre)
+
+```
+
+```{r}
+movie_wf <- workflow() %>%
+  add_formula(model_formula)
+
+```
+
+```{r}
+set.seed(123)  
+movie_split <- initial_split(movies, prop = 0.8)
+movie_train <- training(movie_split)
+movie_test <- testing(movie_split)
+
+
+```
+
+```{r}
+glm_spec <- logistic_reg() %>%
+  set_engine("glm")
+
+glm_fit <- movie_wf %>%
+  add_model(glm_spec) %>%
+  fit(movie_train)
+```
+
+```{r}
+
+
+
+glm_fit %>% predict(movie_test) %>%
+  cbind(movie_test) %>%
+  conf_mat(binary, .pred_class)
+
+glm_fit %>% predict(movie_test) %>%
+  cbind(movie_test) %>%
+  accuracy(binary, .pred_class)
+
+
+
+
+
+```
+
+```{r}
+
+glm_fit %>% predict(movie_train) %>%
+  cbind(movie_train) %>%
+  conf_mat(binary, .pred_class)
+
+glm_fit %>% predict(movie_train) %>%
+  cbind(movie_train) %>%
+  accuracy(binary, .pred_class)
+```
+
+```{r}
+glm_fit %>%
+  predict(movie_test, type="class") %>%
+  bind_cols(movie_test) %>%
+  conf_mat(truth = binary, estimate = .pred_class) %>%
+  autoplot() 
+```
