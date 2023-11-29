@@ -14,10 +14,14 @@ library(tidymodels)
 
 ```
 
+In this model, I use logistic regression to assess whether there is a relationship between Bechdel Test pass/failure and the genre of the movie.
+
 ```{r}
 ggplot(movies_sorted_genre, aes(genre, fill = binary )) +
     geom_bar() +
     coord_flip()
+
+
 ```
 
 ```{r}
@@ -89,4 +93,25 @@ glm_fit %>%
   bind_cols(movie_test) %>%
   conf_mat(truth = binary, estimate = .pred_class) %>%
   autoplot() 
+```
+
+```{r}
+ movies_sorted %>%
+  mutate(movies = fct_reorder(genre, budget)) %>%
+  ggplot(aes(budget, genre, fill = binary, color = binary)) +
+  geom_boxplot(position = position_dodge(preserve = "single"), alpha = 0.2) +
+  scale_x_log10(labels = scales::dollar) +
+  theme(legend.position = "top") +
+  scale_fill_brewer(palette = "Dark2") +
+  scale_color_brewer(palette = "Dark2") +
+  labs(y = NULL, color = NULL, fill = NULL, x = "Budget")
+
+
+
+
+
+
+
+
+
 ```
