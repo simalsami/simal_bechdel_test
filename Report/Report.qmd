@@ -36,6 +36,8 @@ raw_bechdel <- read_csv("../Data/raw_bechdel.csv")
 
 movies <- movies %>%
  mutate(across(contains("gross"), parse_number))
+
+path <- "C:/Users/simal/Data Science/simal_bechdel_test/Figures"
 ```
 
 # Bechdel Test
@@ -72,7 +74,7 @@ The Bechdel test is a test used to test gender biases and representation of wome
 
 Many movies fail to pass this test and it highlights the need for more female representation in strong roles beyond male-centric themes.
 
-![](images/Dykes_to_Watch_Out_For_(Bechdel_test_origin).jpg)
+![](images/Bechdel%20Test-01.jpg){fig-align="center"}
 
 ## Initial Research Question
 
@@ -109,29 +111,18 @@ The Raw Bechdel data set contains 10,136 observations. Each row of the Raw Bechd
 Below is a preview of the dataset:
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
- #| label: tbl-Raw-Bechdel 
-#| tbl-cap: Exploratory plots for the number of movies that passed and fail the Bechdel Test and the distribution of IMDB ratings 
+#| label: tbl-Raw-Bechdel 
+#| tbl-cap: A few rows of the movies data-set
 
-raw_bechdel %>%   head(5) %>%   kable()
+
+raw_bechdel %>%   
+  head(5) %>%   
+  kable()
 ```
 
 ### Movies Data:
 
 The Movies data set contains 1,794 observations. The data set is the the product of an intersection between the raw bechdel data set (every movie that has been put through the Bechdel test by the Bechdel website) and the data set from the [Numbers](https://www.the-numbers.com/) website which is a congregated data set of every movie to hit the box office and their various characteristics.
-
-\`
-
-```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
- #| message: false #| label: tbl-movies #| tbl-cap: Preview of Movies Data set  
-
-movies <- movies %>%
-  select(-plot)
-
-movies %>%
-  head(5) %>%  
-  kable()
-
-```
 
 ## Exploratory Analysis and Observations
 
@@ -155,6 +146,9 @@ ra_1 <- movies  %>%
 
 
 ra_1 
+
+
+
 ```
 
 We can see in the data-set, there are more movies that fail the Bechdel Test than pass.
@@ -260,6 +254,8 @@ movies_sorted_genre %>%
   ylab("Count") +
    theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
 ```
 
 #### Parental Guidance Rating
@@ -275,6 +271,8 @@ ggplot(movies, aes(x = rated, fill = binary)) +
   scale_fill_manual(values = c("PASS" = "lightblue", "FAIL" = "lightpink")) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
 ```
 
 #### Country of Origin
@@ -312,7 +310,10 @@ ggplot(filtered_data, aes(x = country, fill = binary)) +
   ylab("Proportion") +
   scale_fill_manual(values = c("PASS" = "lightblue", "FAIL" = "lightpink")) +
   theme_minimal() +
+  
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
 ```
 
 #### Gross
@@ -330,6 +331,9 @@ movies %>%
 ggplot(aes(intgross_2013, title, fill= binary)) +
   scale_fill_manual(values = c("PASS" = "lightblue", "FAIL" = "lightpink")) +
   geom_col()
+
+
+
 ```
 
 #### Budget
@@ -346,6 +350,8 @@ ggplot(aes(intgross_2013, title, fill= binary)) +
   theme(legend.position = "top") +
   scale_fill_manual(values = c("PASS" = "lightblue", "FAIL" = "lightpink")) +
   labs(y = NULL, color = NULL, fill = NULL, x = "Budget")
+ 
+ 
 ```
 
 #### Rating
@@ -360,6 +366,10 @@ ggplot(movies, aes(x = binary, y = imdb_rating)) +
        y = "IMDB Rating") + 
   geom_boxplot() +
   theme_minimal()
+
+
+
+
 ```
 
 ## Models
