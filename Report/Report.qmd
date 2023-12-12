@@ -58,7 +58,7 @@ In this project, I explore the varying factors including:
 
 -   Gross
 
-that may have on impact on whether or not a movie passes or fails the Bechdel Test. We do not find substantial evidence that any of this factors have a significant role in whether or not a movie passes the test.
+that may have on impact on whether or not a movie passes or fails the Bechdel Test. We do not find substantial evidence that any of these factors have a significant role in whether or not a movie passes the test.
 
 ## Background
 
@@ -72,7 +72,7 @@ The Bechdel test is a test used to test gender biases and representation of wome
 
 Many movies fail to pass this test and it highlights the need for more female representation in strong roles beyond male-centric themes.
 
-![Comic Book titled, "The Rule", by American Cartoonist, Alison Bechdel](images/Dykes_to_Watch_Out_For_(Bechdel_test_origin).jpg)
+![](images/Dykes_to_Watch_Out_For_(Bechdel_test_origin).jpg)
 
 ## Initial Research Question
 
