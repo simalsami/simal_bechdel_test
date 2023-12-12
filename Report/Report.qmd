@@ -26,7 +26,7 @@ library(knitr) # for table formatting
 library(kableExtra) # for extra table formatting 
 library(patchwork) # for combining plots
 library(RColorBrewer) # for plot colors
-
+library(ggplot2)
 # set plot theme
 theme_set(theme_minimal(base_size = 12))
 
@@ -37,7 +37,7 @@ raw_bechdel <- read_csv("../Data/raw_bechdel.csv")
 movies <- movies %>%
  mutate(across(contains("gross"), parse_number))
 
-path <- "C:/Users/simal/Data Science/simal_bechdel_test/Figures"
+
 ```
 
 # Bechdel Test
@@ -74,7 +74,7 @@ The Bechdel test is a test used to test gender biases and representation of wome
 
 Many movies fail to pass this test and it highlights the need for more female representation in strong roles beyond male-centric themes.
 
-![](images/Bechdel%20Test-01.jpg){fig-align="center"}
+![Image from ("https://en.wikipedia.org/wiki/Bechdel_test")](images/Bechdel%20Test-01.jpg){fig-align="center"}
 
 ## Initial Research Question
 
@@ -113,14 +113,33 @@ Below is a preview of the dataset:
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 #| label: tbl-Raw-Bechdel 
 #| tbl-cap: A few rows of the movies data-set
-
+library(gridExtra)
 
 raw_bechdel %>%   
   head(5) %>%   
   kable()
+
+
+
 ```
 
 ### Movies Data:
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+#| label: tbl-Movies 
+#| tbl-cap: A few rows of the movies data-set
+library(gridExtra)
+
+columns_to_exclude <- c("plot", "clean_test", "test")
+
+subset_movies <-
+  movies[, !(names(movies) %in% columns_to_exclude)]
+
+subset_movies %>%   
+  head(5) %>%   
+  kable()
+
+```
 
 The Movies data set contains 1,794 observations. The data set is the the product of an intersection between the raw bechdel data set (every movie that has been put through the Bechdel test by the Bechdel website) and the data set from the [Numbers](https://www.the-numbers.com/) website which is a congregated data set of every movie to hit the box office and their various characteristics.
 
@@ -159,7 +178,7 @@ We can see in the data-set, there are more movies that fail the Bechdel Test tha
 #| label: fig-2
 #| message: false
 #| fig-cap: Exploratory stacked bar plot of the distribution of movies that passed and failed the Bechdel Test over the years.
-ggplot(movies, aes(x=year, fill=binary)) +
+figure <- ggplot(movies, aes(x=year, fill=binary)) +
   geom_bar(position = "stack") +
   scale_fill_manual(values = c("lightpink","lightblue")) +
   labs(
@@ -167,6 +186,9 @@ ggplot(movies, aes(x=year, fill=binary)) +
   )
 
 
+ggsave("Data Science/simal_bechdel_test/Figures/pf_year_dist.png", plot = figure, width = 8, height = 6)
+
+figure
 
 ```
 

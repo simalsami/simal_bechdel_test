@@ -1,25 +1,79 @@
 ---
 title: "Bechdel Test"
+subtitle: "Examining Variables that Contribute to Pass/Fail Rates of Movies"
 author: "Simal Sami"
+institute: "Data Science 201 Fall 2023"
 format: revealjs
 editor: visual
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
-
-## Bullets
-
-When you click the **Render** button a document will be generated that includes:
-
--   Content authored with markdown
--   Output from executable code
-
-## Code
-
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
-
 ```{r}
-1 + 1
+#| echo: false
+#| include: false
+
+# load packages
+library(tidyverse) # wrangling, plots etc.
+library(tidymodels) # modeling
+library(GGally) # paired plots
+library(skimr) # data summary
+library(knitr) # for table formatting
+library(kableExtra) # for extra table formatting 
+library(patchwork) # for combining plots
+library(RColorBrewer) # for plot colors
+library(ggplot2)
+# set plot theme
+theme_set(theme_minimal(base_size = 12))
+
+
+movies <- read_csv("../Data/movies.csv")
+raw_bechdel <- read_csv("../Data/raw_bechdel.csv")
+
+movies <- movies %>%
+ mutate(across(contains("gross"), parse_number))
+```
+
+## Initial Research Question 
+
+-   The Bechdel Test is a test used to evaluate gender biases within media specifically in terms of the portrayl of women. In order to pass the test a film or other work of fiction must satisfy three conditions:
+
+    -   The work must feature two women.
+
+    -   The women must hold a conversation with one another.
+
+    -   The conversation must concern something other than a man.
+
+-   **I would like to know what factors specifically genre, budget, revenue, year, country, gross, ratings, etc. have an impact on whether a movie passes or fails the test.**
+
+## Comic by Cartoonist Allison Bechdel which Inspired the Bechdel Test
+
+![image from ("https://en.wikipedia.org/wiki/Bechdel_test")](images/Bechdel Test.jpg){fig-align="center"}
+
+## Raw Bechdel Data
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+#| label: tbl-Raw-Bechdel
+#| tbl-cap: A few rows of the Raw Bechdel Data set
+
+library(gridExtra)
+
+raw_bechdel %>%   
+  head(5) %>%   
+  kable()
+```
+
+# Movies Data
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+#| label: tbl-Movies 
+#| tbl-cap: A few rows of the movies data-set
+library(gridExtra)
+
+columns_to_exclude <- c("plot", "clean_test", "test")
+
+subset_movies <-
+  movies[, !(names(movies) %in% columns_to_exclude)]
+
+subset_movies %>%   
+  head(5) %>%   
+  kable()
 ```

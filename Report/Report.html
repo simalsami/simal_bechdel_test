@@ -107,6 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/Bechdel%20Test-01.jpg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Image from (“https://en.wikipedia.org/wiki/Bechdel_test”)</figcaption>
 </figure>
 </div>
 </section>
@@ -197,8 +198,220 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="movies-data" class="level3">
 <h3 class="anchored" data-anchor-id="movies-data">Movies Data:</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-Movies" class="anchored">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<caption>Table&nbsp;2: A few rows of the movies data-set</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">year</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">imdb</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">title</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">binary</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">budget</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">domgross</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">intgross</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">code</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">budget_2013</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">domgross_2013</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">intgross_2013</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">period_code</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">decade_code</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">imdb_id</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">rated</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">response</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">language</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">country</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">writer</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">metascore</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">imdb_rating</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">director</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">released</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">actors</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">genre</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">awards</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">runtime</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">type</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">poster</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">imdb_votes</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2013</td>
+<td style="text-align: left;">tt1711425</td>
+<td style="text-align: left;">21 &amp;amp; Over</td>
+<td style="text-align: left;">FAIL</td>
+<td style="text-align: right;">1.3e+07</td>
+<td style="text-align: right;">25682380</td>
+<td style="text-align: right;">42195766</td>
+<td style="text-align: left;">2013FAIL</td>
+<td style="text-align: right;">13000000</td>
+<td style="text-align: right;">25682380</td>
+<td style="text-align: right;">42195766</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">1711425</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2012</td>
+<td style="text-align: left;">tt1343727</td>
+<td style="text-align: left;">Dredd 3D</td>
+<td style="text-align: left;">PASS</td>
+<td style="text-align: right;">4.5e+07</td>
+<td style="text-align: right;">13414714</td>
+<td style="text-align: right;">40868994</td>
+<td style="text-align: left;">2012PASS</td>
+<td style="text-align: right;">45658735</td>
+<td style="text-align: right;">13611086</td>
+<td style="text-align: right;">41467257</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">1343727</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2013</td>
+<td style="text-align: left;">tt2024544</td>
+<td style="text-align: left;">12 Years a Slave</td>
+<td style="text-align: left;">FAIL</td>
+<td style="text-align: right;">2.0e+07</td>
+<td style="text-align: right;">53107035</td>
+<td style="text-align: right;">158607035</td>
+<td style="text-align: left;">2013FAIL</td>
+<td style="text-align: right;">20000000</td>
+<td style="text-align: right;">53107035</td>
+<td style="text-align: right;">158607035</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2024544</td>
+<td style="text-align: left;">R</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">English</td>
+<td style="text-align: left;">USA, UK</td>
+<td style="text-align: left;">John Ridley (screenplay), Solomon Northup (based on "Twelve Years a Slave" by)</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: left;">Steve McQueen</td>
+<td style="text-align: left;">08 Nov 2013</td>
+<td style="text-align: left;">Chiwetel Ejiofor, Dwight Henry, Dickie Gravois, Bryan Batt</td>
+<td style="text-align: left;">Biography, Drama, History</td>
+<td style="text-align: left;">Won 3 Oscars. Another 131 wins &amp; 137 nominations.</td>
+<td style="text-align: left;">134 min</td>
+<td style="text-align: left;">movie</td>
+<td style="text-align: left;">http://ia.media-imdb.com/images/M/MV5BMjExMTEzODkyN15BMl5BanBnXkFtZTcwNTU4NTc4OQ@@._V1_SX300.jpg</td>
+<td style="text-align: right;">143446</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2013</td>
+<td style="text-align: left;">tt1272878</td>
+<td style="text-align: left;">2 Guns</td>
+<td style="text-align: left;">FAIL</td>
+<td style="text-align: right;">6.1e+07</td>
+<td style="text-align: right;">75612460</td>
+<td style="text-align: right;">132493015</td>
+<td style="text-align: left;">2013FAIL</td>
+<td style="text-align: right;">61000000</td>
+<td style="text-align: right;">75612460</td>
+<td style="text-align: right;">132493015</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">1272878</td>
+<td style="text-align: left;">R</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">English, Spanish</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">Blake Masters (screenplay), Steven Grant (based on the Boom! Studios graphic novels by)</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">6.8</td>
+<td style="text-align: left;">Baltasar Kormákur</td>
+<td style="text-align: left;">02 Aug 2013</td>
+<td style="text-align: left;">Denzel Washington, Mark Wahlberg, Paula Patton, Edward James Olmos</td>
+<td style="text-align: left;">Action, Comedy, Crime</td>
+<td style="text-align: left;">1 win.</td>
+<td style="text-align: left;">109 min</td>
+<td style="text-align: left;">movie</td>
+<td style="text-align: left;">http://ia.media-imdb.com/images/M/MV5BNTQ5MTgzNDg4OF5BMl5BanBnXkFtZTcwMjAyODEzOQ@@._V1_SX300.jpg</td>
+<td style="text-align: right;">87301</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2013</td>
+<td style="text-align: left;">tt0453562</td>
+<td style="text-align: left;">42</td>
+<td style="text-align: left;">FAIL</td>
+<td style="text-align: right;">4.0e+07</td>
+<td style="text-align: right;">95020213</td>
+<td style="text-align: right;">95020213</td>
+<td style="text-align: left;">2013FAIL</td>
+<td style="text-align: right;">40000000</td>
+<td style="text-align: right;">95020213</td>
+<td style="text-align: right;">95020213</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">0453562</td>
+<td style="text-align: left;">PG-13</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">English</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">Brian Helgeland</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: left;">Brian Helgeland</td>
+<td style="text-align: left;">12 Apr 2013</td>
+<td style="text-align: left;">Chadwick Boseman, Harrison Ford, Nicole Beharie, Christopher Meloni</td>
+<td style="text-align: left;">Biography, Drama, Sport</td>
+<td style="text-align: left;">3 wins &amp; 13 nominations.</td>
+<td style="text-align: left;">128 min</td>
+<td style="text-align: left;">movie</td>
+<td style="text-align: left;">http://ia.media-imdb.com/images/M/MV5BMTQwMDU4MDI3MV5BMl5BanBnXkFtZTcwMjU1NDgyOQ@@._V1_SX300.jpg</td>
+<td style="text-align: right;">43608</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
 <p>The Movies data set contains 1,794 observations. The data set is the the product of an intersection between the raw bechdel data set (every movie that has been put through the Bechdel test by the Bechdel website) and the data set from the <a href="https://www.the-numbers.com/">Numbers</a> website which is a congregated data set of every movie to hit the box office and their various characteristics.</p>
-<p>`</p>
 </section>
 </section>
 <section id="exploratory-analysis-and-observations" class="level2">
