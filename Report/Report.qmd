@@ -1,0 +1,410 @@
+---
+title: "Bechdel Test Report"
+author: "Simal Sami"
+format: 
+  html:
+    code-fold: true
+    echo: true
+    toc: true
+    toc-location: left
+    self-contained: true
+
+    
+bibliography: report_bib.bib
+---
+
+```{r}
+#| echo: false
+#| include: false
+
+# load packages
+library(tidyverse) # wrangling, plots etc.
+library(tidymodels) # modeling
+library(GGally) # paired plots
+library(skimr) # data summary
+library(knitr) # for table formatting
+library(kableExtra) # for extra table formatting 
+library(patchwork) # for combining plots
+library(RColorBrewer) # for plot colors
+
+# set plot theme
+theme_set(theme_minimal(base_size = 12))
+
+
+movies <- read_csv("../Data/movies.csv")
+raw_bechdel <- read_csv("../Data/raw_bechdel.csv")
+
+movies <- movies %>%
+ mutate(across(contains("gross"), parse_number))
+```
+
+# Bechdel Test
+
+## Executive Summary
+
+In this project, I explore the varying factors including:
+
+-   Genre
+
+-   Rating
+
+-   Country of Origin
+
+-   Budget
+
+-   Year
+
+-   Guidance rating
+
+-   Gross
+
+that may have on impact on whether or not a movie passes or fails the Bechdel Test. We do not find substantial evidence that any of this factors have a significant role in whether or not a movie passes the test.
+
+## Background
+
+The Bechdel test is a test used to test gender biases and representation of women in movies, TV shows, etc. Often women in film portray characters that lack depth or are depicted as certain archetypes of damsels in distress. The test was first introduced by cartoonist Alison Bechdel who said that in order to pass the test a work of fiction must:
+
+-   Involve two named women characters
+
+-   The two women must converse with one another
+
+-   The conversation does not involve a man or any mention of a male character.
+
+Many movies fail to pass this test and it highlights the need for more female representation in strong roles beyond male-centric themes.
+
+![Comic Book titled, "The Rule", by American Cartoonist, Alison Bechdel](images/Dykes_to_Watch_Out_For_(Bechdel_test_origin).jpg)
+
+## Initial Research Question
+
+Various predictor values \## Approach to Research
+
+## Data Collection and Documentation
+
+### Bechdel Test Data
+
+The data is from a public data source call [TidyTuesday](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-09/readme.md) and it was created by [FiveThirtyEight](https://github.com/fivethirtyeight/data/tree/master/bechdel), a polling aggregation website using [Bechdel](https://bechdeltest.com/) test data which analyzed over 5,000 films and whether or not they passed the test alongside [TheNumbers.com](https://www.the-numbers.com/) which compiled a dataset of various stats on the different movies including awards, directors, ratings, revenue, etc. The data was collected to expose gender biases within film and compare whether or not those films that pass or do not pass the Bechdel test differ in budgets, ratings, revenue, etc. The set analyzes 1,794 films between the years of 1970-2013. The films in the dataset are an aggregate of the intersection between the films in the Numbers data set and the Bechdel dataset.
+
+### Raw Bechdel Data:
+
+The Raw Bechdel data set contains 10,136 observations. Each row of the Raw Bechdel data set is a movie which contains the following 5 columns:
+
+-   A Movie ID
+
+-   The year it was made
+
+-   The IMDB ID which is an ID assigned to each movie by the Internet Movie Database
+
+-   The title of the movie
+
+-   A Rating which is a scale of 0-3:
+
+    -   1 means the movies features at least 2 named women.
+
+    -   2 means that the women converse with one another
+
+    -   3 means that the conversation is about something other than a man.
+
+    -   0 means the movie is un-scored or contains none of the Bechdel features.
+
+Below is a preview of the dataset:
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+ #| label: tbl-Raw-Bechdel 
+#| tbl-cap: Exploratory plots for the number of movies that passed and fail the Bechdel Test and the distribution of IMDB ratings 
+
+raw_bechdel %>%   head(5) %>%   kable()
+```
+
+### Movies Data:
+
+The Movies data set contains 1,794 observations. The data set is the the product of an intersection between the raw bechdel data set (every movie that has been put through the Bechdel test by the Bechdel website) and the data set from the [Numbers](https://www.the-numbers.com/) website which is a congregated data set of every movie to hit the box office and their various characteristics.
+
+\`
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+ #| message: false #| label: tbl-movies #| tbl-cap: Preview of Movies Data set  
+
+movies <- movies %>%
+  select(-plot)
+
+movies %>%
+  head(5) %>%  
+  kable()
+
+```
+
+## Exploratory Analysis and Observations
+
+### Potential Response Variables
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+#| label: fig-1
+#| message: false
+#| fig-cap: Exploratory plot for the number of movies that passed and fail the Bechdel Test.
+
+
+ra_1 <- movies  %>%
+  ggplot(aes(x=binary, fill=binary)) + 
+  geom_bar(color="#512d6d") + 
+   scale_fill_manual(values = c("lightpink","lightblue")) + 
+  geom_text(stat = "count", aes(label = after_stat(count), vjust = 3), size = 4)
+  theme(legend.position = "none") +
+  xlab("Passing or Failing Bechdel Test") + 
+  ylab("Count") +
+     theme(legend.position = "none")
+
+
+ra_1 
+```
+
+We can see in the data-set, there are more movies that fail the Bechdel Test than pass.
+
+#### Year
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+#| label: fig-2
+#| message: false
+#| fig-cap: Exploratory stacked bar plot of the distribution of movies that passed and failed the Bechdel Test over the years.
+ggplot(movies, aes(x=year, fill=binary)) +
+  geom_bar(position = "stack") +
+  scale_fill_manual(values = c("lightpink","lightblue")) +
+  labs(
+    fill="Bechdel Test Outcome"
+  )
+
+
+
+```
+
+Figure two displays the distribution of movies produced over the years sorted by whether or not they pass the Bechdel Test. Over the years the proportions of pass to fail seem to be roughly the same.
+
+#### Genre
+
+```{r}
+movies_sorted_genre <- movies %>%
+  separate_rows(genre, sep = ", ")
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+#| message: false
+
+summary_data <- movies_sorted_genre %>%
+  group_by(genre, binary) %>%
+  summarise(count = n())
+
+
+genres_with_more_passing <- summary_data %>%
+  spread(binary, count, fill = 0) %>%  
+  filter(PASS > FAIL)  
+
+
+cat("Genres with more passing movies than failing movies:\n")
+cat(genres_with_more_passing$genre, sep = "\n")
+
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+movies_pass<- movies %>%
+  filter(binary == "PASS")
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+movies_fail <- movies %>%
+  filter(binary == "FAIL")
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+#| label: fig-3
+#| message: false
+#| fig-cap: Line plots of the count of movies passing and failing over the years.
+pass<- ggplot(movies_pass, aes(x = year)) +
+  geom_line(stat = "count", color = "lightblue") +
+  xlab("Year") +
+  ylab("Count of Movies Passing") +
+  theme_minimal()
+
+fail<- ggplot(movies_fail, aes(x = year)) +
+  geom_line(stat = "count", color = "lightpink") +
+  xlab("Year") +
+  ylab("Count of Movies Failing") +
+  theme_minimal()
+
+(pass + fail)
+```
+
+As evident in the plot, the rate of both passing and failing moves have declined significantly since 2010 but there seems to be a slightly growing increase as of recent for both.
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+
+movies_sorted_country<- movies %>%
+  separate_rows(country, sep = ", ")
+
+
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+
+#| label: fig-6
+#| message: false
+#| fig-cap: Stacked bar plot of the distribution of movies that passed and failed by genre.
+
+
+movies_sorted_genre %>%
+  group_by(genre, binary) %>%
+  summarise(count = n()) %>%
+  ggplot(aes(x = genre, y = count, fill= binary)) +
+  geom_bar(stat = "identity") +
+ scale_fill_manual(values = c("PASS" = "lightblue", "FAIL" = "lightpink")) +
+  
+  xlab("Genre") +
+  ylab("Count") +
+   theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+#### Parental Guidance Rating
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+#| label: fig-8
+#| message: false
+#| fig-cap: Grouped bar plot of the count of movies passing and failing grouped by guidance rating.
+ggplot(movies, aes(x = rated, fill = binary)) +
+  geom_bar(position = "dodge") +
+  xlab("Guidance Rating") +
+  ylab("Count") +
+  scale_fill_manual(values = c("PASS" = "lightblue", "FAIL" = "lightpink")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+#### Country of Origin
+
+```{r}
+
+movies_sorted_country<- movies %>%
+  separate_rows(country, sep = ", ")
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+
+top_countries <- movies_sorted_country %>%
+  filter(!is.na(country)) %>%
+  group_by(country) %>%
+  summarise(movie_count = n()) %>%
+  arrange(desc(movie_count)) %>%
+  head(5)
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+
+#| label: fig-9
+#| message: false
+#| fig-cap: The top 5 producers of movies in the dataset and their proportion of failing/passing movies.
+
+countries_of_interest <- c("USA", "UK", "Germany", "France", "Canada")
+
+filtered_data <- movies_sorted_country %>%
+  filter(country %in% countries_of_interest)
+
+ggplot(filtered_data, aes(x = country, fill = binary)) +
+  geom_bar(position = "fill") +
+  xlab("Country") +
+  ylab("Proportion") +
+  scale_fill_manual(values = c("PASS" = "lightblue", "FAIL" = "lightpink")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+#### Gross
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+#| label: fig-10
+#| message: false
+#| fig-cap: Grouped bar plot of the count of movies passing and failing grouped by guidance rating.
+movies %>%
+  filter(year >= 1990) %>%
+  arrange(desc(intgross_2013)) %>%
+  select(title, budget, intgross, intgross_2013, binary) %>%
+  head(25) %>% 
+  mutate(title = fct_reorder(title, intgross_2013)) %>%
+ggplot(aes(intgross_2013, title, fill= binary)) +
+  scale_fill_manual(values = c("PASS" = "lightblue", "FAIL" = "lightpink")) +
+  geom_col()
+```
+
+#### Budget
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+#| label: fig-11
+#| message: false
+#| fig-cap: Box plot of the distribution of movie ratings of those that passed and failed with outliers, means, and quartiles
+ movies_sorted_genre %>%
+  mutate(movies = fct_reorder(genre, budget)) %>%
+  ggplot(aes(budget, genre, fill = binary, color = binary)) +
+  geom_boxplot(position = position_dodge(preserve = "single"), alpha = 0.2) +
+  scale_x_log10(labels = scales::dollar) +
+  theme(legend.position = "top") +
+  scale_fill_manual(values = c("PASS" = "lightblue", "FAIL" = "lightpink")) +
+  labs(y = NULL, color = NULL, fill = NULL, x = "Budget")
+```
+
+#### Rating
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+#| label: fig-12
+#| message: false
+#| fig-cap: Box plot of the distribution of movie ratings of those that passed and failed with outliers, means, and quartiles
+
+ggplot(movies, aes(x = binary, y = imdb_rating)) +
+  labs(x = "Bechdel Test Outcome",
+       y = "IMDB Rating") + 
+  geom_boxplot() +
+  theme_minimal()
+```
+
+## Models
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+#| label: fig-13
+#| message: false
+#| fig-cap: Box plot of the distribution of movie ratings of those that passed and failed with outliers, means, and quartiles
+
+set.seed(123)
+movies <- data.frame(
+  pass_bechedel = sample(c("PASS", "FAIL"), 100, replace = TRUE),
+  budget = runif(100, 1e6, 1e8),
+  revenue = runif(100, 1e6, 1e8)
+)
+
+
+movies %>%
+  ggplot(aes(x = budget, y = revenue, color = pass_bechedel)) +
+  geom_point(alpha = 0.7) +
+  labs(title = "Scatter Plot of Budget vs Revenue",
+       x = "Budget",
+       y = "Revenue",
+       color = "Bechdel Test")
+
+
+movies_lm <- lm(revenue ~ pass_bechedel + budget, data = movies)
+
+
+
+
+movies_intervals <- reg_intervals(revenue ~ pass_bechedel + budget, data = movies, times = 500)
+
+movies_intervals %>%
+  ggplot(aes(x = term, y = .estimate)) +
+  geom_point(size = 2, color = "steelblue") +
+  geom_errorbar(aes(ymin = .lower, ymax = .upper), width = 0.3, color = "steelblue") +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(title = "Confidence Intervals for Model Coefficients") +
+  coord_flip()
+
+```
+
+## Model Results
+
+## Conclusions
+
+## References

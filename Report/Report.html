@@ -2,13 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Simal Sami">
 
-<title>Simal Data Package Assignment</title>
+<title>report</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,16 +57,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="simal_data_package_assignment_files/libs/clipboard/clipboard.min.js"></script>
-<script src="simal_data_package_assignment_files/libs/quarto-html/quarto.js"></script>
-<script src="simal_data_package_assignment_files/libs/quarto-html/popper.min.js"></script>
-<script src="simal_data_package_assignment_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="simal_data_package_assignment_files/libs/quarto-html/anchor.min.js"></script>
-<link href="simal_data_package_assignment_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="simal_data_package_assignment_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="simal_data_package_assignment_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="simal_data_package_assignment_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="simal_data_package_assignment_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="Report_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Report_files/libs/quarto-html/quarto.js"></script>
+<script src="Report_files/libs/quarto-html/popper.min.js"></script>
+<script src="Report_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Report_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Report_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Report_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Report_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Report_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -78,64 +77,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Simal Data Package Assignment</h1>
-</div>
 
 
-
-<div class="quarto-title-meta">
-
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Simal Sami </p>
-          </div>
-  </div>
-    
-  
-    
-  </div>
-  
-
-</header>
-
-<section id="load-packages" class="level1">
-<h1>Load Packages</h1>
+<section id="bechdel-test" class="level1">
+<h1>Bechdel Test</h1>
+<section id="executive-summary" class="level2">
+<h2 class="anchored" data-anchor-id="executive-summary">Executive Summary</h2>
+<p>In this project, I explore the varying factors including:</p>
+<ul>
+<li><p>Genre</p></li>
+<li><p>Rating</p></li>
+<li><p>Country of Origin</p></li>
+<li><p>Budget</p></li>
+<li><p>Year</p></li>
+<li><p>Guidance rating</p></li>
+<li><p>Gross</p></li>
+</ul>
+<p>that may have on impact on whether or not a movie passes or fails the Bechdel Test. We do not find substantial evidence that any of this factors have a significant role in whether or not a movie passes the test.</p>
 </section>
-<section id="load-data" class="level1">
-<h1>Load Data</h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>movies <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Data/movies.csv"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>raw_bechdel <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Data/raw_bechdel.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/get_movies_data.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'jsonlite' was built under R version 4.1.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: There were 3 warnings in `mutate()`.
-The first warning was:
-i In argument: `metascore = parse_number(metascore)`.
-Caused by warning:
-! 2336 parsing failures.
-row col expected actual
-  1  -- a number    N/A
-  3  -- a number    N/A
-  4  -- a number    N/A
-  6  -- a number    N/A
- 10  -- a number    N/A
-... ... ........ ......
-See problems(...) for more details.
-i Run `dplyr::last_dplyr_warnings()` to see the 2 remaining warnings.</code></pre>
-</div>
-</div>
-</section>
-<section id="section-1-data-sources" class="level1">
-<h1>Section 1: Data Sources</h1>
-<p><strong>Background</strong></p>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
 <p>The Bechdel test is a test used to test gender biases and representation of women in movies, TV shows, etc. Often women in film portray characters that lack depth or are depicted as certain archetypes of damsels in distress. The test was first introduced by cartoonist Alison Bechdel who said that in order to pass the test a work of fiction must:</p>
 <ul>
 <li><p>Involve two named women characters</p></li>
@@ -143,18 +104,26 @@ i Run `dplyr::last_dplyr_warnings()` to see the 2 remaining warnings.</code></pr
 <li><p>The conversation does not involve a man or any mention of a male character.</p></li>
 </ul>
 <p>Many movies fail to pass this test and it highlights the need for more female representation in strong roles beyond male-centric themes.</p>
-<p><strong>The Data</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Dykes_to_Watch_Out_For_(Bechdel_test_origin).jpg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Comic Book titled, “The Rule”, by American Cartoonist, Alison Bechdel</figcaption>
+</figure>
+</div>
+</section>
+<section id="initial-research-question" class="level2">
+<h2 class="anchored" data-anchor-id="initial-research-question">Initial Research Question</h2>
+<p>Various predictor values ## Approach to Research</p>
+</section>
+<section id="data-collection-and-documentation" class="level2">
+<h2 class="anchored" data-anchor-id="data-collection-and-documentation">Data Collection and Documentation</h2>
+<section id="bechdel-test-data" class="level3">
+<h3 class="anchored" data-anchor-id="bechdel-test-data">Bechdel Test Data</h3>
 <p>The data is from a public data source call <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-09/readme.md">TidyTuesday</a> and it was created by <a href="https://github.com/fivethirtyeight/data/tree/master/bechdel">FiveThirtyEight</a>, a polling aggregation website using <a href="https://bechdeltest.com/">Bechdel</a> test data which analyzed over 5,000 films and whether or not they passed the test alongside <a href="https://www.the-numbers.com/">TheNumbers.com</a> which compiled a dataset of various stats on the different movies including awards, directors, ratings, revenue, etc. The data was collected to expose gender biases within film and compare whether or not those films that pass or do not pass the Bechdel test differ in budgets, ratings, revenue, etc. The set analyzes 1,794 films between the years of 1970-2013. The films in the dataset are an aggregate of the intersection between the films in the Numbers data set and the Bechdel dataset.</p>
 </section>
-<section id="format-of-data" class="level1">
-<h1>Format of Data</h1>
-<p>The data is tabular and stored as a csv file</p>
-</section>
-<section id="data-structure" class="level1">
-<h1>Data Structure</h1>
-<section id="raw-bechdel-data" class="level2">
-<h2 class="anchored" data-anchor-id="raw-bechdel-data">Raw Bechdel Data:</h2>
-<p>The Raw Bechdel data set contains 10,136 observations in tabular form. Each row of the Raw Bechdel data set is a movie which contains the following 5 columns:</p>
+<section id="raw-bechdel-data" class="level3">
+<h3 class="anchored" data-anchor-id="raw-bechdel-data">Raw Bechdel Data:</h3>
+<p>The Raw Bechdel data set contains 10,136 observations. Each row of the Raw Bechdel data set is a movie which contains the following 5 columns:</p>
 <ul>
 <li><p>A Movie ID</p></li>
 <li><p>The year it was made</p></li>
@@ -170,198 +139,214 @@ i Run `dplyr::last_dplyr_warnings()` to see the 2 remaining warnings.</code></pr
 </ul>
 <p>Below is a preview of the dataset:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>raw_bechdel <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="tbl-Raw-Bechdel" class="anchored">
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
-<caption>Table&nbsp;1: Preview of Raw Bechdel Dataset</caption>
 <thead>
 <tr class="header">
 <th style="text-align: right;" data-quarto-table-cell-role="th">id</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">rating</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">title</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">imdb_id</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">year</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">imdb_id</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">title</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">rating</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">9602</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">Passage de Venus</td>
-<td style="text-align: left;">3155794</td>
 <td style="text-align: right;">1874</td>
+<td style="text-align: left;">3155794</td>
+<td style="text-align: left;">Passage de Venus</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">9804</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">La Rosace Magique</td>
-<td style="text-align: left;">14495706</td>
 <td style="text-align: right;">1877</td>
+<td style="text-align: left;">14495706</td>
+<td style="text-align: left;">La Rosace Magique</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">9603</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">Sallie Gardner at a Gallop</td>
-<td style="text-align: left;">2221420</td>
 <td style="text-align: right;">1878</td>
+<td style="text-align: left;">2221420</td>
+<td style="text-align: left;">Sallie Gardner at a Gallop</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">9806</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">Le singe musicien</td>
-<td style="text-align: left;">12592084</td>
 <td style="text-align: right;">1878</td>
+<td style="text-align: left;">12592084</td>
+<td style="text-align: left;">Le singe musicien</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">9816</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">Athlete Swinging a Pick</td>
-<td style="text-align: left;">7816420</td>
 <td style="text-align: right;">1881</td>
+<td style="text-align: left;">7816420</td>
+<td style="text-align: left;">Athlete Swinging a Pick</td>
+<td style="text-align: right;">0</td>
 </tr>
 </tbody>
 </table>
-</div>
 
 
 </div>
 </div>
 </section>
-<section id="movies-data" class="level2">
-<h2 class="anchored" data-anchor-id="movies-data">Movies Data:</h2>
+<section id="movies-data" class="level3">
+<h3 class="anchored" data-anchor-id="movies-data">Movies Data:</h3>
 <p>The Movies data set contains 1,794 observations. The data set is the the product of an intersection between the raw bechdel data set (every movie that has been put through the Bechdel test by the Bechdel website) and the data set from the <a href="https://www.the-numbers.com/">Numbers</a> website which is a congregated data set of every movie to hit the box office and their various characteristics.</p>
+<p>`</p>
+</section>
+</section>
+<section id="exploratory-analysis-and-observations" class="level2">
+<h2 class="anchored" data-anchor-id="exploratory-analysis-and-observations">Exploratory Analysis and Observations</h2>
+<section id="potential-response-variables" class="level3">
+<h3 class="anchored" data-anchor-id="potential-response-variables">Potential Response Variables</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>movies <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="tbl-movies" class="anchored">
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
-<caption>Table&nbsp;2: Preview of Movies Data set</caption>
-<thead>
-<tr class="header">
-<th style="text-align: right;" data-quarto-table-cell-role="th">year</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">imdb</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">title</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">test</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">clean_test</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">binary</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">budget</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">domgross</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">intgross</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">code</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">budget_2013$</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">domgross_2013$</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">intgross_2013$</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">period code</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">decade code</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">2013</td>
-<td style="text-align: left;">tt1711425</td>
-<td style="text-align: left;">21 &amp;amp; Over</td>
-<td style="text-align: left;">notalk</td>
-<td style="text-align: left;">notalk</td>
-<td style="text-align: left;">FAIL</td>
-<td style="text-align: right;">1.3e+07</td>
-<td style="text-align: left;">25682380</td>
-<td style="text-align: left;">42195766</td>
-<td style="text-align: left;">2013FAIL</td>
-<td style="text-align: right;">13000000</td>
-<td style="text-align: left;">25682380</td>
-<td style="text-align: left;">42195766</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2012</td>
-<td style="text-align: left;">tt1343727</td>
-<td style="text-align: left;">Dredd 3D</td>
-<td style="text-align: left;">ok-disagree</td>
-<td style="text-align: left;">ok</td>
-<td style="text-align: left;">PASS</td>
-<td style="text-align: right;">4.5e+07</td>
-<td style="text-align: left;">13414714</td>
-<td style="text-align: left;">40868994</td>
-<td style="text-align: left;">2012PASS</td>
-<td style="text-align: right;">45658735</td>
-<td style="text-align: left;">13611086</td>
-<td style="text-align: left;">41467257</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2013</td>
-<td style="text-align: left;">tt2024544</td>
-<td style="text-align: left;">12 Years a Slave</td>
-<td style="text-align: left;">notalk-disagree</td>
-<td style="text-align: left;">notalk</td>
-<td style="text-align: left;">FAIL</td>
-<td style="text-align: right;">2.0e+07</td>
-<td style="text-align: left;">53107035</td>
-<td style="text-align: left;">158607035</td>
-<td style="text-align: left;">2013FAIL</td>
-<td style="text-align: right;">20000000</td>
-<td style="text-align: left;">53107035</td>
-<td style="text-align: left;">158607035</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2013</td>
-<td style="text-align: left;">tt1272878</td>
-<td style="text-align: left;">2 Guns</td>
-<td style="text-align: left;">notalk</td>
-<td style="text-align: left;">notalk</td>
-<td style="text-align: left;">FAIL</td>
-<td style="text-align: right;">6.1e+07</td>
-<td style="text-align: left;">75612460</td>
-<td style="text-align: left;">132493015</td>
-<td style="text-align: left;">2013FAIL</td>
-<td style="text-align: right;">61000000</td>
-<td style="text-align: left;">75612460</td>
-<td style="text-align: left;">132493015</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2013</td>
-<td style="text-align: left;">tt0453562</td>
-<td style="text-align: left;">42</td>
-<td style="text-align: left;">men</td>
-<td style="text-align: left;">men</td>
-<td style="text-align: left;">FAIL</td>
-<td style="text-align: right;">4.0e+07</td>
-<td style="text-align: left;">95020213</td>
-<td style="text-align: left;">95020213</td>
-<td style="text-align: left;">2013FAIL</td>
-<td style="text-align: right;">40000000</td>
-<td style="text-align: left;">95020213</td>
-<td style="text-align: left;">95020213</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-</tr>
-</tbody>
-</table>
+<div id="fig-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Report_files/figure-html/fig-1-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Exploratory plot for the number of movies that passed and fail the Bechdel Test.</figcaption>
+</figure>
 </div>
-
-
+</div>
+</div>
+<p>We can see in the data-set, there are more movies that fail the Bechdel Test than pass.</p>
+<section id="year" class="level4">
+<h4 class="anchored" data-anchor-id="year">Year</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Report_files/figure-html/fig-2-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Exploratory stacked bar plot of the distribution of movies that passed and failed the Bechdel Test over the years.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Figure two displays the distribution of movies produced over the years sorted by whether or not they pass the Bechdel Test. Over the years the proportions of pass to fail seem to be roughly the same.</p>
+</section>
+<section id="genre" class="level4">
+<h4 class="anchored" data-anchor-id="genre">Genre</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>movies_sorted_genre <span class="ot">&lt;-</span> movies <span class="sc">%&gt;%</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(genre, <span class="at">sep =</span> <span class="st">", "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Report_files/figure-html/fig-3-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Line plots of the count of movies passing and failing over the years.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>As evident in the plot, the rate of both passing and failing moves have declined significantly since 2010 but there seems to be a slightly growing increase as of recent for both.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Report_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="parental-guidance-rating" class="level4">
+<h4 class="anchored" data-anchor-id="parental-guidance-rating">Parental Guidance Rating</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-8" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Report_files/figure-html/fig-8-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Grouped bar plot of the count of movies passing and failing grouped by guidance rating.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="country-of-origin" class="level4">
+<h4 class="anchored" data-anchor-id="country-of-origin">Country of Origin</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>movies_sorted_country<span class="ot">&lt;-</span> movies <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(country, <span class="at">sep =</span> <span class="st">", "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Report_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="gross" class="level4">
+<h4 class="anchored" data-anchor-id="gross">Gross</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-10" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Report_files/figure-html/fig-10-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5: Grouped bar plot of the count of movies passing and failing grouped by guidance rating.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="budget" class="level4">
+<h4 class="anchored" data-anchor-id="budget">Budget</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-11" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Report_files/figure-html/fig-11-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;6: Box plot of the distribution of movie ratings of those that passed and failed with outliers, means, and quartiles</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="rating" class="level4">
+<h4 class="anchored" data-anchor-id="rating">Rating</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-12" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Report_files/figure-html/fig-12-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;7: Box plot of the distribution of movie ratings of those that passed and failed with outliers, means, and quartiles</figcaption>
+</figure>
+</div>
 </div>
 </div>
 </section>
 </section>
-<section id="data-issues" class="level1">
-<h1>Data Issues</h1>
-<p>The data does not contain any errors or missing values.</p>
 </section>
-<section id="data-cleaning" class="level1">
-<h1>Data Cleaning</h1>
-<p>The data has been cleaned</p>
+<section id="models" class="level2">
+<h2 class="anchored" data-anchor-id="models">Models</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-13-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Report_files/figure-html/fig-13-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;8: Box plot of the distribution of movie ratings of those that passed and failed with outliers, means, and quartiles</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-13-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Report_files/figure-html/fig-13-2.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;9: Box plot of the distribution of movie ratings of those that passed and failed with outliers, means, and quartiles</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="model-results" class="level2">
+<h2 class="anchored" data-anchor-id="model-results">Model Results</h2>
+</section>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+</section>
 </section>
 
 </main>

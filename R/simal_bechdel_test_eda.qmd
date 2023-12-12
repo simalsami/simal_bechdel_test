@@ -94,6 +94,9 @@ ggplot(movies, aes(x=year, fill=binary)) +
   )
 ```
 
+```         
+```
+
 The stacked bar plot indicates that over the years the proportions of failing and passing movies stayed roughly the same throughout the years. There were no notable differences in proportions.
 
 ```{r message=FALSE}
