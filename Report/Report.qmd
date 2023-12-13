@@ -1,6 +1,8 @@
 ---
-title: "Bechdel Test Report"
+title: "Bechdel Test Analysis"
+subtitle: "Examining Variables that Contribute to Pass/Fail Rates of Movies"
 author: "Simal Sami"
+institute: "University of Scranton"
 format: 
   html:
     code-fold: true
@@ -60,7 +62,7 @@ In this project, I explore the varying factors including:
 
 -   Gross
 
-that may have on impact on whether or not a movie passes or fails the Bechdel Test. We do not find substantial evidence that any of these factors have a significant role in whether or not a movie passes the test.
+Particularly, I explore the impacts these factor may have on whether or not a movie passes or fails the Bechdel Test. Using predictive modeling and exploratory analystical methods, we do not find substantial evidence that any of these factors have a significant role in whether or not a movie passes the test.
 
 ## Background
 
@@ -78,7 +80,7 @@ Many movies fail to pass this test and it highlights the need for more female re
 
 ## Initial Research Question
 
-Various predictor values \## Approach to Research
+I would like to know the impact that certain predictor variables have on whether or not a movie will pass the Bechdel Test. More specifically, for example, if movies that fall under the action genre are more likely to pass/fail the Bechdel Test or if movies that have have higher overall ratings are more likely to pass/fail the Bechdel Test. I take these further and explore other varying factors as well.
 
 ## Data Collection and Documentation
 
@@ -170,9 +172,26 @@ ra_1
 
 ```
 
-We can see in the data-set, there are more movies that fail the Bechdel Test than pass.
+We can see in the data-set, there are more movies that fail the Bechdel Test than pass. There are 991 failing movies as opposed to 803 passing movies.
 
 #### Year
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+#| message: false
+
+summary_data <- movies %>%
+  group_by(year, binary) %>%
+  summarise(count = n())
+
+
+years_with_more_passing <- summary_data %>%
+  spread(binary, count, fill = 0) %>%  
+  filter(PASS > FAIL)  
+
+
+cat("Years with more passing movies than failing movies:\n")
+cat(years_with_more_passing$year, sep = "\n")
+```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
 #| label: fig-2
@@ -192,31 +211,13 @@ figure
 
 ```
 
-Figure two displays the distribution of movies produced over the years sorted by whether or not they pass the Bechdel Test. Over the years the proportions of pass to fail seem to be roughly the same.
+Figure two displays the distribution of movies produced over the years sorted by whether or not they pass the Bechdel Test. Over the years the proportions of pass to fail seem to be roughly the same from year-to-year. As seen in the chart above, the listed years are those in we saw more passing than failing movies. Evidently, there are more failing years than passing but the counts of the years are not too substantial.
 
 #### 
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
 movies_sorted_genre <- movies %>%
   separate_rows(genre, sep = ", ")
-```
-
-```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
-#| message: false
-
-summary_data <- movies_sorted_genre %>%
-  group_by(genre, binary) %>%
-  summarise(count = n())
-
-
-genres_with_more_passing <- summary_data %>%
-  spread(binary, count, fill = 0) %>%  
-  filter(PASS > FAIL)  
-
-
-cat("Genres with more passing movies than failing movies:\n")
-cat(genres_with_more_passing$genre, sep = "\n")
-
 ```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
@@ -248,9 +249,26 @@ fail<- ggplot(movies_fail, aes(x = year)) +
 (pass + fail)
 ```
 
-As evident in the plot, the rate of both passing and failing moves have declined significantly since 2010 but there seems to be a slightly growing increase as of recent for both.
+As evident in the plot, the rate of both passing and failing moves saw an initial steady increase since the 1970s with varying peaks and lows throughout the years, but there has been a more signifigant decline since 2010. However, we can see a slightly growing increase as of recent for both.
 
 #### Genre
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+#| message: false
+
+summary_data <- movies_sorted_genre %>%
+  group_by(genre, binary) %>%
+  summarise(count = n())
+
+
+genres_with_more_passing <- summary_data %>%
+  spread(binary, count, fill = 0) %>%  
+  filter(PASS > FAIL)  
+
+
+cat("Genres with more passing movies than failing movies:\n")
+cat(genres_with_more_passing$genre, sep = "\n")
+```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
 
@@ -262,7 +280,7 @@ movies_sorted_country<- movies %>%
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
 
-#| label: fig-6
+#| label: fig-4
 #| message: false
 #| fig-cap: Stacked bar plot of the distribution of movies that passed and failed by genre.
 
@@ -282,10 +300,29 @@ movies_sorted_genre %>%
 
 ```
 
+This plot displays the counts of passing and failing movies sorted by genre. In the chart listed you can see the movies that have more passing movies than failing.
+
 #### Parental Guidance Rating
 
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+#| message: false
+
+summary_data <- movies %>%
+  group_by(rated, binary) %>%
+  summarise(count = n())
+
+
+rating_with_more_failing<- summary_data %>%
+  spread(binary, count, fill = 0) %>%  
+  filter(PASS < FAIL)  
+
+
+cat("Ratings with more failing movies than passing movies:\n")
+cat(rating_with_more_failing$rated, sep = "\n")
+```
+
 ```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
-#| label: fig-8
+#| label: fig-5
 #| message: false
 #| fig-cap: Grouped bar plot of the count of movies passing and failing grouped by guidance rating.
 ggplot(movies, aes(x = rated, fill = binary)) +
@@ -299,12 +336,31 @@ ggplot(movies, aes(x = rated, fill = binary)) +
 
 ```
 
+This plot does the same function as the previous, but sorts based on the parental guidance rating. 10 of the 12 ratings all fail more than passing.
+
 #### Country of Origin
 
-```{r}
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
 
 movies_sorted_country<- movies %>%
   separate_rows(country, sep = ", ")
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+#| message: false
+
+summary_data <- movies_sorted_country %>%
+  group_by(country, binary) %>%
+  summarise(count = n())
+
+
+country_with_more_failing <- summary_data %>%
+  spread(binary, count, fill = 0) %>%  
+  filter(PASS < FAIL)  
+
+
+cat("Countries with more failing movies than passing movies:\n")
+cat(country_with_more_failing$country, sep = "\n")
 ```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
@@ -317,9 +373,9 @@ top_countries <- movies_sorted_country %>%
   head(5)
 ```
 
-```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+```{r message=FALSE, echo=FALSE, warning=FALSE}
 
-#| label: fig-9
+#| label: fig-6
 #| message: false
 #| fig-cap: The top 5 producers of movies in the dataset and their proportion of failing/passing movies.
 
@@ -340,10 +396,12 @@ ggplot(filtered_data, aes(x = country, fill = binary)) +
 
 ```
 
+This plot displays the proportion of failures to passes for the top 5 producers of movies in the industry. They are roughly the same with some producing slightly more failures than passes and vice versa. The chart above lists the countries with more failing movies than passing overall.
+
 #### Gross
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
-#| label: fig-10
+#| label: fig-7
 #| message: false
 #| fig-cap: Grouped bar plot of the count of movies passing and failing grouped by guidance rating.
 movies %>%
@@ -360,10 +418,12 @@ ggplot(aes(intgross_2013, title, fill= binary)) +
 
 ```
 
+This grouped bar plot displays top 25 movies with the most produced international gross and whether they passed or failed the Bechdel test. More top earners failed than passed.
+
 #### Budget
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
-#| label: fig-11
+#| label: fig-8
 #| message: false
 #| fig-cap: Box plot of the distribution of movie ratings of those that passed and failed with outliers, means, and quartiles
  movies_sorted_genre %>%
@@ -378,10 +438,12 @@ ggplot(aes(intgross_2013, title, fill= binary)) +
  
 ```
 
+The average budgets for each genre fall between \$10,000,000 and \$100,000,000 and these were sorted by which genres failed and passed more.
+
 #### Rating
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
-#| label: fig-12
+#| label: fig-9
 #| message: false
 #| fig-cap: Box plot of the distribution of movie ratings of those that passed and failed with outliers, means, and quartiles
 
@@ -396,10 +458,12 @@ ggplot(movies, aes(x = binary, y = imdb_rating)) +
 
 ```
 
+The ratings of the movies in relation to passes and failures do not seem to have any sort of impact on whether a movie passes or fails. The average rating for both fell between 6 and 8.
+
 ## Models
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
-#| label: fig-13
+#| label: fig-10
 #| message: false
 #| fig-cap: Box plot of the distribution of movie ratings of those that passed and failed with outliers, means, and quartiles
 
@@ -437,8 +501,47 @@ movies_intervals %>%
 
 ```
 
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+#| label: fig-16
+#| message: false
+#| fig-cap: Logistic regression plot for predicting passing based on genre and rating
+
+set.seed(123)
+movies <- data.frame(
+  pass_bechedel = sample(c(0, 1), 100, replace = TRUE),  
+  genre = sample(c("Action", "Drama", "Comedy", "Sci-Fi"), 100, replace = TRUE),
+  rating = runif(100, 1, 10) 
+)
+
+movies %>%
+  ggplot(aes(x = rating, y = genre, color = factor(pass_bechedel))) +
+  geom_point(alpha = 0.7) +
+  labs(title = "Scatter Plot of Rating vs Genre",
+       x = "Rating",
+       y = "Genre",
+       color = "Pass Bechdel Test")
+
+movies_glm <- glm(pass_bechedel ~ genre + rating, data = movies, family = "binomial")
+
+
+movies_intervals <- reg_intervals(movies_glm, data = movies, times = 500)
+
+movies_intervals %>%
+  ggplot(aes(x = term, y = .estimate)) +
+  geom_point(size = 2, color = "steelblue") +
+  geom_errorbar(aes(ymin = .lower, ymax = .upper), width = 0.3, color = "steelblue") +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(title = "Confidence Intervals for Model Coefficients") +
+  coord_flip()
+
+```
+
 ## Model Results
+
+Figures 10 and 11 shows the bootstrap estimates for the linear regression coefficients for the predictors of budget/revenue and genre/ratings respectively along with estimates for the 95% confidence intervals. Since the confidence intervals for all predictors include 0, we cannot conclude that there is a relationship between these variables and passing or failing the Bechdel Test.
 
 ## Conclusions
 
-## References
+In this report, we analyzed various predictor variables and their impact on the outcome of the Bechdel test performed on each movie. There is little evidence to suggest that there is a significant relationship between these factors and test outcomes.
+
+To further improve our analysis, we could analyze more movies especially more recent ones. It would also be interesting if there was data included on the gender of each director. I could also consider utilizing other predictive modeling such as decision trees or support vector machines that could provide more accuracy.

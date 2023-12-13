@@ -116,7 +116,7 @@ subset_movies %>%
 
 # Model Estimates for Passing/Failing
 
-![Figure 1: Bootstrap estimates for logistic regression coefficients for passing/failing with genre and rating predictors ](images/CI_genre.png){fig-align="center"}
+![Figure 1: Bootstrap estimates for logistic regression coefficients for passing/failing with genre and rating predictors](images/CI_genre.png){fig-align="center"}
 
 # Scatter-plot for Pass/Fail Predictions
 
