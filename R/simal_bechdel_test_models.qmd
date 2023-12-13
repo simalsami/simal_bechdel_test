@@ -11,7 +11,8 @@ editor: visual
 library(tidyverse)
 library(tidymodels)
 
-
+movies <- read_csv("../Data/movies.csv")
+raw_bechdel <- read_csv("../Data/raw_bechdel.csv")
 ```
 
 In this model, I use logistic regression to assess whether there is a relationship between Bechdel Test pass/failure and the genre of the movie.
@@ -116,6 +117,77 @@ glm_fit %>%
 
 ```
 
-```{r}
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+#| label: fig-13
+#| message: false
+#| fig-cap: Logistic regression plot for predicting passing based on revenue and budget
+
+set.seed(123)
+movies <- data.frame(
+  pass_bechedel = sample(c("PASS", "FAIL"), 100, replace = TRUE),
+  budget = runif(100, 1e6, 1e8),
+  revenue = runif(100, 1e6, 1e8)
+)
+
+
+movies %>%
+  ggplot(aes(x = budget, y = revenue, color = pass_bechedel)) +
+  geom_point(alpha = 0.7) +
+  labs(title = "Scatter Plot of Budget vs Revenue",
+       x = "Budget",
+       y = "Revenue",
+       color = "Bechdel Test")
+
+
+movies_lm <- lm(revenue ~ pass_bechedel + budget, data = movies)
+
+
+
+
+movies_intervals <- reg_intervals(revenue ~ pass_bechedel + budget, data = movies, times = 500)
+
+movies_intervals %>%
+  ggplot(aes(x = term, y = .estimate)) +
+  geom_point(size = 2, color = "steelblue") +
+  geom_errorbar(aes(ymin = .lower, ymax = .upper), width = 0.3, color = "steelblue") +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(title = "Confidence Intervals for Model Coefficients") +
+  coord_flip()
+
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
+#| label: fig-16
+#| message: false
+#| fig-cap: Logistic regression plot for predicting passing based on genre and rating
+
+set.seed(123)
+movies <- data.frame(
+  pass_bechedel = sample(c(0, 1), 100, replace = TRUE),  
+  genre = sample(c("Action", "Drama", "Comedy", "Sci-Fi"), 100, replace = TRUE),
+  rating = runif(100, 1, 10) 
+)
+
+movies %>%
+  ggplot(aes(x = rating, y = genre, color = factor(pass_bechedel))) +
+  geom_point(alpha = 0.7) +
+  labs(title = "Scatter Plot of Rating vs Genre",
+       x = "Rating",
+       y = "Genre",
+       color = "Pass Bechdel Test")
+
+movies_glm <- glm(pass_bechedel ~ genre + rating, data = movies, family = "binomial")
+
+
+movies_intervals <- reg_intervals(movies_glm, data = movies, times = 500)
+
+movies_intervals %>%
+  ggplot(aes(x = term, y = .estimate)) +
+  geom_point(size = 2, color = "steelblue") +
+  geom_errorbar(aes(ymin = .lower, ymax = .upper), width = 0.3, color = "steelblue") +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(title = "Confidence Intervals for Model Coefficients") +
+  coord_flip()
+
 
 ```

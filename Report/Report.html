@@ -443,12 +443,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Figure two displays the distribution of movies produced over the years sorted by whether or not they pass the Bechdel Test. Over the years the proportions of pass to fail seem to be roughly the same.</p>
 </section>
-<section id="genre" class="level4">
-<h4 class="anchored" data-anchor-id="genre">Genre</h4>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>movies_sorted_genre <span class="ot">&lt;-</span> movies <span class="sc">%&gt;%</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(genre, <span class="at">sep =</span> <span class="st">", "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="section" class="level4">
+<h4 class="anchored" data-anchor-id="section"></h4>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-3" class="quarto-figure quarto-figure-center anchored">
@@ -460,6 +456,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>As evident in the plot, the rate of both passing and failing moves have declined significantly since 2010 but there seems to be a slightly growing increase as of recent for both.</p>
+</section>
+<section id="genre" class="level4">
+<h4 class="anchored" data-anchor-id="genre">Genre</h4>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="Report_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
@@ -482,8 +481,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="country-of-origin" class="level4">
 <h4 class="anchored" data-anchor-id="country-of-origin">Country of Origin</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>movies_sorted_country<span class="ot">&lt;-</span> movies <span class="sc">%&gt;%</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(country, <span class="at">sep =</span> <span class="st">", "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>movies_sorted_country<span class="ot">&lt;-</span> movies <span class="sc">%&gt;%</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(country, <span class="at">sep =</span> <span class="st">", "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">

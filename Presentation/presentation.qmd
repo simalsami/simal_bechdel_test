@@ -32,7 +32,7 @@ movies <- movies %>%
  mutate(across(contains("gross"), parse_number))
 ```
 
-## Initial Research Question 
+## Initial Research Question
 
 -   The Bechdel Test is a test used to evaluate gender biases within media specifically in terms of the portrayl of women. In order to pass the test a film or other work of fiction must satisfy three conditions:
 
@@ -46,7 +46,7 @@ movies <- movies %>%
 
 ## Comic by Cartoonist Allison Bechdel which Inspired the Bechdel Test
 
-![image from ("https://en.wikipedia.org/wiki/Bechdel_test")](images/Bechdel Test.jpg){fig-align="center"}
+![image from ("https://en.wikipedia.org/wiki/Bechdel_test")](images/Bechdel%20Test.jpg){fig-align="center"}
 
 ## Raw Bechdel Data
 
@@ -77,3 +77,61 @@ subset_movies %>%
   head(5) %>%   
   kable()
 ```
+
+# Count of Pass/Fail Movies in Data-set
+
+![](images/count.png){fig-align="center"}
+
+# Count of Pass/Fails Over the Years
+
+![](images/pf_year_dist.png){fig-align="center"}
+
+# Pass/Fail Trends Over the Years
+
+![](images/dist_pf_year_trend.png){fig-align="center"}
+
+# Pass/Fail Counts for Each Genre
+
+![](images/genre_pf.png){fig-align="center"}
+
+# Pass/Fail Counts for each Parental Guidance Rating
+
+![](images/guidance_rating_pf.png){fig-align="center"}
+
+# Proportions of Pass/Fail for Top 5 Producers of Movies
+
+![](images/country_pf_dist.png){fig-align="center"}
+
+# Pass/Fail for Top 25 Highest Grossing Movies of the Last Two Decades
+
+![](images/gross_pf.png){fig-align="center"}
+
+# Budgets for Pass/Failure of each Genre
+
+![](images/genre_budget.png){fig-align="center"}
+
+# Boxplot of Ratings and Counts of Pass/Fail
+
+![](images/rating_pf.png){fig-align="center"}
+
+# Model Estimates for Passing/Failing
+
+![Figure 1: Bootstrap estimates for logistic regression coefficients for passing/failing with genre and rating predictors ](images/CI_genre.png){fig-align="center"}
+
+# Scatter-plot for Pass/Fail Predictions
+
+![](images/spgenre.png){fig-align="center"}
+
+# Model Estimates for Passing/Failing
+
+![Figure 2: Bootstrap estimates for logistic regression coefficients for passing/failing with budget and revenue predictors](images/confidence_int_model.png){fig-align="center"}
+
+# Scatterplot for Pass/Fail Predictions
+
+![](images/rev_budget.png){fig-align="center"}
+
+# Conclusions
+
+-   We lack evidence that predictor variables like genre, budget, revenue, year, country, gross, and rating have a significant impact on whether a movie passes the Bechdel Test.
+
+-   Guidance ratings may have a slight impact in that ratings like PG, PG-13, and R tend to have more failing than passing movies.

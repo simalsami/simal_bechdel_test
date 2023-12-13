@@ -194,9 +194,9 @@ figure
 
 Figure two displays the distribution of movies produced over the years sorted by whether or not they pass the Bechdel Test. Over the years the proportions of pass to fail seem to be roughly the same.
 
-#### Genre
+#### 
 
-```{r}
+```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
 movies_sorted_genre <- movies %>%
   separate_rows(genre, sep = ", ")
 ```
@@ -249,6 +249,8 @@ fail<- ggplot(movies_fail, aes(x = year)) +
 ```
 
 As evident in the plot, the rate of both passing and failing moves have declined significantly since 2010 but there seems to be a slightly growing increase as of recent for both.
+
+#### Genre
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE, results='hide'}
 
